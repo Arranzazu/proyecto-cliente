@@ -51,9 +51,12 @@
                     size="lg"
                     variant="success"
                     class="mb-2 mr-sm-2 mb-sm-3"
-                    >Crear Nuevo Evento</b-button
+                    >Crear</b-button
                   >
-                  <p><nuxt-link to="./eventos">Volver</nuxt-link></p>
+                   <br>
+            <b-button size="sm" variant="outline-primary" class="mb-2 mr-sm-2 mb-sm-3" @click="volver">
+              Volver</b-button
+            ><br />
                 </b-form>
               </div>
             </b-card>
@@ -124,7 +127,10 @@ beforeMount() {
       } catch (err) {
         alert('Hubo un error al crear el evento')
       }
-    }
+    },
+      volver() {
+      this.$router.back()
+ },
   }
   
   

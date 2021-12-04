@@ -3,16 +3,18 @@
     <b-container fluid>
       <b-row class="text-center">
         <div class="saludo">
-          <b-card title="Detalles Evento" class="mb-2">
-            <b-card-text> </b-card-text>
+          <b-card title="Consumos Totales Evento" class="mb-2">
+            <b-card-text> <p>Evento: <b>Cabalgata de Reyes Magos</b></p></b-card-text>
 
             <div class="table details">
               <table class="table">
                 <tr>
                   <th>Producto</th>
-                  <th>Unids.</th>
-                  <th>Devolución</th>
-                  <th>Consumos</th>
+                  <th>Unids Inicio</th>
+                  <th>Carrito 1</th>
+                  <th>Carrito 2</th>
+                  <th>Carrito 3</th>
+                  <th>Total</th>
                 </tr>
                 <tr
                   v-for="product in products"
@@ -23,13 +25,10 @@
                   <td v-text="product.product"></td>
 
                   <td v-text="product.unids"></td>
-                  <td>
-                    <b-form-input
-                      v-model="cons"
-                      placeholder="Unids."
-                    ></b-form-input>
-                  </td>
-                  <td v-text="product.unids - cons"></td>
+                   <td>Cons Carrito 1</td>
+                   <td>Cons Carrito 2</td>
+                    <td>Cons Carrito 3</td>
+                  <td v-text="product.unids"></td>
                 </tr>
               </table>
             </div>
@@ -42,7 +41,10 @@
               >Añadir</b-button
             >
 
-            <p><nuxt-link to="../menu">Volver al menú</nuxt-link></p>
+              <br>
+            <b-button size="sm" variant="outline-primary" class="mb-2 mr-sm-2 mb-sm-3" @click="volver">
+              Volver</b-button
+            ><br />
           </b-card>
         </div>
       </b-row>
@@ -98,6 +100,9 @@ export default {
     editar(id) {
       this.$router.push(`/details/${id}`)
     },
+    volver() {
+      this.$router.back()
+ },
   },
 }
 </script>

@@ -31,6 +31,7 @@
 
         <b-form-select
                   v-model="eventos"
+                     v-if="isUser"
                   size="sm"
                   placeholder="seleccione usuario"
                   class="mt-3 mb-sm-4"
@@ -45,7 +46,7 @@
                   </template><br /></b-form-select
                 >
         
-          <b-button size="lg" class="mb-2 mr-sm-2 mb-sm-3"  @click="detailsEvent(id)"
+          <b-button   v-if="isUser" size="lg" class="mb-2 mr-sm-2 mb-sm-3"  @click="detailsEvent(id)"
             ><b-icon icon="calendar-event">  </b-icon> Ir a Detalles Evento</b-button
           > </div>
       </b-row>
@@ -92,6 +93,7 @@ export default {
 
     //reviso si es admin
     this.isAdmin = window.localStorage.getItem('admin') === 'true'
+       this.isUser = window.localStorage.getItem('admin') === 'false'
     this.email = window.localStorage.getItem('email')
   },
   methods: {

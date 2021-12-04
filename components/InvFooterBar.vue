@@ -14,7 +14,7 @@
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
           <b-button squared variant="primary" size="lg" router-link to="/menu" nuxt
-            >Back to Admin</b-button
+            >Volver al Menú Principal</b-button
           >
         </b-navbar-nav>
       </b-collapse>

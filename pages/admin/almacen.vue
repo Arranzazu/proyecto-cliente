@@ -33,7 +33,10 @@
               >Añadir</b-button
             >
 
-            <p><nuxt-link to="../menu">Volver al menú</nuxt-link></p>
+            <br>
+            <b-button size="sm" variant="outline-primary" class="mb-2 mr-sm-2 mb-sm-3" @click="volver">
+              Volver</b-button
+            ><br />
           </b-card>
         </div>
       </b-row>
@@ -70,6 +73,9 @@ export default {
     newproduct() {
       this.$router.push('/admin/new-product')
     },
+    volver() {
+      this.$router.back()
+ },
   },
 }
 </script>

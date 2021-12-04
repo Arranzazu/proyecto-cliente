@@ -7,10 +7,37 @@
             <b-card-text>
               Detalles del evento<b> {{ data.event.name }} </b><br />
               Activo:<b> {{ data.event.activo }}</b><br />
-              Asignado a <b>Elena_Perez@gmail.com</b>
+              Fecha:<b> {{ data.event.date }}</b><br />
             </b-card-text>
+
+              <b-button
+              router-link
+              to="/carrito/61a8830879b731398465e309"
+              size="lg"
+              variant="outline-primary"
+              class="mb-2 mr-sm-2"
+              >Carrito 1</b-button
+            >
+
+            <b-button
+              router-link
+              to="/carrito/61a8625e7bd038d0d0d6b71c"
+              size="lg"
+              variant="outline-primary"
+              class="mb-2 mr-sm-2"
+              >Carrito 2</b-button
+            >
+           
+            <b-button
+              router-link
+              to="/carrito/61a8647d7bd038d0d0d6b720"
+              size="lg"
+              variant="outline-primary"
+              class="mb-2 mr-sm-2"
+              >Carrito 3</b-button
+            >
             
-            <div class="table details">
+            <!-- <div class="table details">
               <table class="table">
                 <tr>
                   <th>Producto</th>
@@ -44,7 +71,12 @@
               variant="success"
               class="mb-2 mr-sm-2 mb-sm-3"
               >Asignar Producto</b-button
-            ><p><nuxt-link to="../menu">Volver al menú</nuxt-link></p>
+            ><p> -->
+              
+             <br>
+            <b-button size="sm" variant="outline-primary" class="mb-2 mr-sm-2 mb-sm-3" @click="volver">
+              Volver</b-button
+            ><br />
           </b-card>
         </div>
       </b-row>
@@ -105,7 +137,13 @@ export default {
       // ctx.redirect('/home')
     }
   },
-}
+methods: {
+    volver() {
+      this.$router.back()
+ },
+ }
+  }
+
 </script>
 
 <style>

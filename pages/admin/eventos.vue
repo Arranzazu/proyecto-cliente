@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row class="text-center">
         <div class="saludo">
-          <b-card title="Listado de eventos" class="mb-2">
+          <b-card title="Listado de eventos (ADMIN)" class="mb-2">
             <b-card-text>
               Busca un evento y elecciona las opciones
             </b-card-text>
@@ -62,8 +62,10 @@
                   >Crear Nuevo</b-button
                 >
 
-           
-                <p><nuxt-link to="../menu">Volver</nuxt-link></p>
+           <br>
+                 <b-button size="sm" variant="outline-primary" class="mb-2 mr-sm-2 mb-sm-3" @click="volver">
+              Volver</b-button
+            ><br />
               </b-form>
             </div>
           </b-card>
@@ -119,7 +121,9 @@ export default {
    detail(id) {
     this.$router.push(`/details/${id}`)
   },
-  
+  volver() {
+      this.$router.back()
+ },
   },
 }
 </script>

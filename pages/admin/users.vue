@@ -50,7 +50,10 @@
 <br>
                  
                
-                    <p><nuxt-link to="../menu">Volver al menú</nuxt-link></p>
+                   <br>
+            <b-button size="sm" variant="outline-primary" class="mb-2 mr-sm-2 mb-sm-3" @click="volver">
+              Volver</b-button
+            ><br />
                 </b-form>
               </div>
             </b-card>
@@ -156,7 +159,9 @@ export default {
       const data = await res.json()
       this.users = data.users
     },
-
+  volver() {
+      this.$router.back()
+ },
   },
 }
 </script>
