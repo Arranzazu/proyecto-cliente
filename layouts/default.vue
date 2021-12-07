@@ -4,7 +4,7 @@
   
       <InvHeaderBar />  
    
-        <b-container fluid="lg">
+        <b-container class="inv-layout-main" fluid="lg">
           <b-row class="justify-content-md-center">
             <b-col cols="2">
             </b-col>
@@ -16,7 +16,7 @@
             </b-col >
           </b-row> 
         </b-container>
- <InvFooterBar />
+ <!-- <InvFooterBar /> -->
 
 
   </div>      
@@ -26,4 +26,11 @@
 export default {
 }
 </script>
+
+
+<style>
+.inv-layout-main {
+ height: 89vh;
+}
+</style>
 

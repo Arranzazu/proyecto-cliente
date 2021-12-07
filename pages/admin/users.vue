@@ -128,7 +128,7 @@ export default {
       var answer =confirm('Estás seguro que deseas eliminar el usuario?', );
       if (answer){
       await fetch(url, { method: 'delete' })
-      alert('usuarioSuprimido')
+      alert('usuario Suprimido')
       await this.updateData()}
       else{        this.$router.push('/admin/users') }
     },

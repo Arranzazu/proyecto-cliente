@@ -6,75 +6,46 @@
           <b-card title="Detalles del Evento" class="mb-2">
             <b-card-text>
               Detalles del evento<b> {{ data.event.name }} </b><br />
-              Activo:<b> {{ data.event.activo }}</b><br />
-              Fecha:<b> {{ data.event.date }}</b><br />
+              Activo:<b> {{ data.event.activo }}</b
+              ><br />
+              Fecha:<b> {{ data.event.date }}</b
+              ><br />
             </b-card-text>
-
+            <p>Carritos:</p>
+            <div
+              class="carritos"
+              v-for="carrito in carritos"
+              :key="carrito._id"
+            >
               <b-button
-              router-link
-              to="/carrito/61a8830879b731398465e309"
-              size="lg"
-              variant="outline-primary"
-              class="mb-2 mr-sm-2"
-              >Carrito 1</b-button
-            >
-
-            <b-button
-              router-link
-              to="/carrito/61a8625e7bd038d0d0d6b71c"
-              size="lg"
-              variant="outline-primary"
-              class="mb-2 mr-sm-2"
-              >Carrito 2</b-button
-            >
-           
-            <b-button
-              router-link
-              to="/carrito/61a8647d7bd038d0d0d6b720"
-              size="lg"
-              variant="outline-primary"
-              class="mb-2 mr-sm-2"
-              >Carrito 3</b-button
-            >
-            
-            <!-- <div class="table details">
-              <table class="table">
-                <tr>
-                  <th>Producto</th>
-                  <th>Unids.</th>
-                  <th>Devolución</th>
-                  <th>Consumos</th>
-                </tr>
-                <tr
-                  v-for="product in products"
-                  v-bind:key="product._id"
-                  v-on:click="editar(products._id)"
-                  v-bind:style="product.unids <= 10 ? 'color:red' : ''"
-                >
-                  <td v-text="product.product"></td>
-
-                  <td v-text="product.unids"></td>
-                  <td>
-                    <b-form-input
-                      v-model="cons"
-                      placeholder="Unids."
-                    ></b-form-input>
-                  </td>
-                  <td v-text="product.unids - cons"></td>
-                </tr>
-              </table>
+                v-if="carrito.evento === eventId"
+                @click="onClick(carrito._id)"
+                size="lg"
+                variant="outline-primary"
+                class="mb-2 mr-sm-2"
+                >Carrito {{ carrito.numero }}</b-button
+              >
             </div>
+
+            <br />
             <b-button
               router-link
-              to="/admin/asignar-producto"
+              to="/carrito/new-carrito"
               size="lg"
-              variant="success"
+              variant="outline-success"
+              class="mb-2 mr-sm-2"
+              >Añadir Carrito</b-button
+            >
+
+           
+
+            <br />
+            <b-button
+              size="sm"
+              variant="outline-primary"
               class="mb-2 mr-sm-2 mb-sm-3"
-              >Asignar Producto</b-button
-            ><p> -->
-              
-             <br>
-            <b-button size="sm" variant="outline-primary" class="mb-2 mr-sm-2 mb-sm-3" @click="volver">
+              @click="volver"
+            >
               Volver</b-button
             ><br />
           </b-card>
@@ -90,7 +61,7 @@ export default {
     return {
       products: null,
       cons: '',
-   
+      eventId: undefined,
     }
   },
 
@@ -105,7 +76,6 @@ export default {
   //   }
   //   },
 
-  
   async asyncData(ctx) {
     try {
       const id = ctx.params.id
@@ -113,14 +83,13 @@ export default {
       const res = await fetch(url)
       const data = await res.json()
 
-    const url2 = 'http://localhost:4500/carrito/all' //listado  carritos
-    const res2 = await fetch(url2)
-    const data2 = await res2.json()
+      const url2 = 'http://localhost:4500/carrito/all' //listado  carritos
+      const res2 = await fetch(url2)
+      const data2 = await res2.json()
 
-    const url3 = 'http://localhost:4500/almacen/all' //listadoproductos
-    const res3 = await fetch(url3)
-    const data3 = await res3.json()
- 
+      const url3 = 'http://localhost:4500/almacen/all' //listadoproductos
+      const res3 = await fetch(url3)
+      const data3 = await res3.json()
 
       // console.log({ data })
 
@@ -128,22 +97,27 @@ export default {
         data,
         data3,
         data2,
-         carritos: data2.carritos,
-         products: data3.products,
-        // eventId: ctx.params.id,
+        carritos: data2.carritos,
+        products: data3.products,
+        eventId: ctx.params.id,
       }
     } catch (_) {
       console.log('Hubo un problema!')
       // ctx.redirect('/home')
     }
   },
-methods: {
+  methods: {
     volver() {
       this.$router.back()
- },
- }
-  }
-
+    },
+    onClick(carritoid) {
+      this.$router.push(`/carrito/${carritoid}`)
+    },
+    sortCarritos(carritos) {
+            return (carritos, 'numero');
+        }
+  },
+}
 </script>
 
 <style>

@@ -3,7 +3,7 @@
     <b-container fluid>
       <b-row class="text-center">
         <div class="saludo">
-          <b-card title="Listado de eventos (ADMIN)" class="mb-2">
+          <b-card title="Listado de eventos y opciones" class="mb-2">
             <b-card-text>
               Busca un evento y elecciona las opciones
             </b-card-text>
@@ -26,17 +26,11 @@
                   </template>
                 </b-form-select>
 
-                <b-button size="sg" class="mb-2 mr-sm-2 mb-sm-1"
+                <b-button size="sg" class="mb-2 mr-sm-2 mb-sm-3"
                   @click="detail(eventos)"
                   >Detalles</b-button
                 >
-                <b-button
-                  size="sg"
-                  class="mb-2 mr-sm-2 mb-sm-1"
-                  router-link
-                  to="/admin/asignar"
-                  >Asignar Evento</b-button
-                ><br />
+              
                 <b-button size="sg" class="mb-2 mr-sm-2 mb-sm-3"
                 router-link to="../details/event-detail"
                   >Consumos</b-button
@@ -49,9 +43,9 @@
                   @click="removeEvent(eventos)"
                   >Eliminar</b-button
                 >
-                <div class="mt-2">
+                <!-- <div class="mt-2">
                   Seleccionado: <strong>{{ eventos }} </strong>
-                </div>
+                </div> -->
                 <br />
                 <b-button
                   router-link

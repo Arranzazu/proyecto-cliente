@@ -3,14 +3,16 @@
     <b-container fluid>
       <b-row>
         <div class="saludo text-center">
-          <p CLASS="h2 mb-sm-5"><b-icon icon="list">  </b-icon>  MENÚ PRINCIPAL</p>
+          <p CLASS="h2 mb-sm-5">
+            <b-icon icon="list"> </b-icon> MENÚ PRINCIPAL
+          </p>
 
           <b-button
             v-if="isAdmin"
             size="lg"
             class="mb-2 mr-sm-2 mb-sm-3"
             @click="almacen"
-            ><b-icon icon="house">  </b-icon> Almacén</b-button
+            ><b-icon icon="house"> </b-icon> Almacén</b-button
           ><br />
           <b-button
             v-if="isAdmin"
@@ -18,68 +20,79 @@
             class="mb-2 mr-sm-2 mb-sm-3"
             router-link
             to="/admin/eventos"
-            > <b-icon icon="calendar-event">  </b-icon> Eventos</b-button
+          >
+            <b-icon icon="calendar-event"> </b-icon> Eventos</b-button
           ><br />
-            <b-button
+          <b-button
             v-if="isAdmin"
             size="lg"
             class="mb-2 mr-sm-2 mb-sm-3"
             router-link
             to="/admin/users"
-            ><b-icon icon="people">  </b-icon> Usuarios</b-button
+            ><b-icon icon="people"> </b-icon> Usuarios</b-button
           ><br />
 
-        <b-form-select
-                  v-model="eventos"
-                     v-if="isUser"
-                  size="sm"
-                  placeholder="seleccione usuario"
-                  class="mt-3 mb-sm-4"
-                >
-                  <template #first>
-                    <b-form-select-option
-                      v-for="event in events"
-                      :key="event._id"
-                      :value={event}                
-                      >{{ event.name }}, {{ event.date }}</b-form-select-option
-                    >
-                  </template><br /></b-form-select
-                >
-        
-          <b-button   v-if="isUser" size="lg" class="mb-2 mr-sm-2 mb-sm-3"  @click="detailsEvent(id)"
-            ><b-icon icon="calendar-event">  </b-icon> Ir a Detalles Evento</b-button
-          > </div>
+          <p v-if="isUser" align="left"><u>Mis eventos:</u></p>
+           <p v-if="isAdmin" align="left"><u>Eventos Pendientes de Asignar:</u></p>
+
+          <div class="carritos" v-for="carrito in carritos" :key="carrito._id">
+            <b-button
+              v-if="carrito.usuario === userId"
+              @click="alcarrito(carrito._id)"
+              size="lg"
+              variant="outline-primary"
+              class="mb-2 mr-sm-2"
+              >Evento {{ carrito.evento }}, carrito número
+              {{ carrito.numero }}</b-button
+            >
+          </div>
+        </div>
       </b-row>
     </b-container>
   </div>
 </template>
 <script>
-import { BIcon, BIconList, BIconPeople, BIconHouse, BIconCalendarEvent } from 'bootstrap-vue'
+import {
+  BIcon,
+  BIconList,
+  BIconPeople,
+  BIconHouse,
+  BIconCalendarEvent,
+} from 'bootstrap-vue'
 export default {
-    components: {
+  components: {
     BIcon,
     BIconList,
     BIconPeople,
     BIconHouse,
-    BIconCalendarEvent
+    BIconCalendarEvent,
   },
   data() {
     return {
       users: [],
       user: '',
+      userId: '',
       isAdmin: '',
+      isUser: '',
       email: undefined,
       eventos: null,
     }
   },
 
- async asyncData() {
-    const url = 'http://localhost:4500/event/all' //listadoeventos
+  async asyncData() {
+    const url = 'http://localhost:4500/carrito/all' //listado carritos
     const res = await fetch(url)
     const data = await res.json()
-       return {
-      events: data.events,
-     
+
+    const url2 = 'http://localhost:4500/event/all' //listado eventos
+    const res2 = await fetch(url2)
+    const data2 = await res2.json()
+
+    return {
+      data,
+      data2,
+      carritos: data.carritos,
+      events: data2.events,
     }
   },
 
@@ -93,19 +106,25 @@ export default {
 
     //reviso si es admin
     this.isAdmin = window.localStorage.getItem('admin') === 'true'
-       this.isUser = window.localStorage.getItem('admin') === 'false'
+    this.isUser = window.localStorage.getItem('admin') === 'false'
     this.email = window.localStorage.getItem('email')
+    this.userId = window.localStorage.getItem('userId')
   },
-  methods: {
+
+  methods: { 
+    
+   alcarrito(carritoid) {
+      this.$router.push(`/carrito/${carritoid}`)
+  },
     almacen() {
       this.$router.push('/admin/almacen')
     },
   },
-   detailsEvent(id) {
-      console.log('update: '+ id)
-      this.$router.push(`/details/${id}`)
-    },
-  
+  detailsEvent(id) {
+    console.log('update: ' + id)
+    this.$router.push(`/details/${id}`)
+  },
+ 
 }
 </script>
 <style>
