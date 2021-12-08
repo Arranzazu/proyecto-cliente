@@ -18,7 +18,7 @@
               :key="carrito._id"
             >
               <b-button
-                v-if="carrito.evento === eventId"
+                v-if="carrito.evento._id === eventId"
                 @click="onClick(carrito._id)"
                 size="lg"
                 variant="outline-primary"
@@ -28,16 +28,14 @@
             </div>
 
             <br />
+
             <b-button
-              router-link
-              to="/carrito/new-carrito"
+              @click="newCar(eventId)"
               size="lg"
               variant="outline-success"
               class="mb-2 mr-sm-2"
               >Añadir Carrito</b-button
             >
-
-           
 
             <br />
             <b-button
@@ -113,9 +111,13 @@ export default {
     onClick(carritoid) {
       this.$router.push(`/carrito/${carritoid}`)
     },
+    newCar(eventId) {
+      console.log('venta')
+      this.$router.push(`/nuevo-carrito/${eventId}`)
+    },
     sortCarritos(carritos) {
-            return (carritos, 'numero');
-        }
+      return carritos, 'numero'
+    },
   },
 }
 </script>

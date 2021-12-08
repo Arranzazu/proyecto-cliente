@@ -55,7 +55,7 @@
                   v-on:click="editar(ventas._id)"
                 >
                   <td
-                    v-text="venta.producto"
+                    v-text="venta.producto.product"
                     v-if="venta.carrito === carritoId"
                   ></td>
 

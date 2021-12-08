@@ -6,7 +6,7 @@
           <div class="saludo">
             <b-card title="Crear Nuevo Evento" class="mb-2">
               <b-card-text>
-                Indica nombre del evento, fecha, número de carritos y si está o
+                Indica nombre del evento, fecha y si está o
                 no activo.
               </b-card-text>
               <div>
@@ -27,14 +27,14 @@
                     placeholder="Fecha del Evento MM/DD/AAAA"
                     required
                   ></b-form-input>
-                  <b-form-input
+                  <!-- <b-form-input
                     class="mb-2 mr-sm-2 mb-sm-3"
                     id="cars"
                     v-model="cars"
                     type="text"
                     placeholder="Número de carritos activos"
                     required
-                  ></b-form-input>
+                  ></b-form-input> -->
                   <b-form-checkbox
                     class="mb-2 mr-sm-2 mb-sm-3"
                     id="activo"
@@ -98,7 +98,7 @@ beforeMount() {
    
     async NewEvent() {
       console.log("Crear evento")
-      if (!this.name || !this.date || !this.cars ) {
+      if (!this.name || !this.date ) {
         alert('Todos los campos son necesarios')
         return
       }

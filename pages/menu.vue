@@ -42,7 +42,7 @@
               size="lg"
               variant="outline-primary"
               class="mb-2 mr-sm-2"
-              >Evento {{ carrito.evento }}, carrito número
+              >Evento {{ carrito.evento.name }}, carrito número
               {{ carrito.numero }}</b-button
             >
           </div>
