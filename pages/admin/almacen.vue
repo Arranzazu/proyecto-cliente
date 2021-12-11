@@ -30,7 +30,15 @@
               variant="success"
               class="mb-2 mr-sm-2 mb-sm-3"
               @click="newproduct"
-              >Añadir</b-button
+              >Crear nuevo Producto</b-button
+            >
+            
+            <b-button
+              size="lg"
+              variant="warning"
+              class="mb-2 mr-sm-2 mb-sm-3"
+              @click="newcategory"
+              >Crear Categoría</b-button
             >
 
             <br>
@@ -72,6 +80,9 @@ export default {
   methods: {
     newproduct() {
       this.$router.push('/admin/new-product')
+    },
+      newcategory() {
+      this.$router.push('/admin/new-category')
     },
     volver() {
       this.$router.back()

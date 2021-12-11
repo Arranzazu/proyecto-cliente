@@ -46,13 +46,13 @@
                 <tr>
                   <th>Producto</th>
                   <th>Unids.</th>
-                  <th>Devolución</th>
                   <th>Consumos</th>
+                  <th>Devolución</th>
                 </tr>
                 <tr
                   v-for="venta in ventas"
                   v-bind:key="venta._id"
-                  v-on:click="editar(ventas._id)"
+                  
                 >
                   <td
                     v-text="venta.producto.product"
@@ -61,22 +61,31 @@
 
                   <td
                     v-text="venta.unidades"
+                     id="unidades1"
                     v-if="venta.carrito === carritoId"
                   ></td>
-                  <td v-if="venta.carrito === carritoId">
+                  <td   v-if="venta.carrito === carritoId">
+                   
                     <b-form-input
-                      v-model="cons"
-                      placeholder="Unids."
+                    v-model="unidscons"
+                     id="unidscons"
+                       placeholder="Unids."
                     ></b-form-input>
                   </td>
                   <td
-                    v-text="venta.unidades - cons"
+                    v-text="venta.unidades - unidscons"
                     v-if="venta.carrito === carritoId"
                   ></td>
                 </tr>
               </table>
             </div>
-
+ <b-button
+                @click="NewCons()"
+                size="lg"
+                variant="warning"
+                class="mb-2 mr-sm-2 mb-sm-3"
+                >Validar consumos</b-button
+              >
             <div v-if="isAdmin">
               <b-button
                 @click="venta(carritoId)"
@@ -86,6 +95,7 @@
                 >Asignar Producto</b-button
               >
             </div>
+             
             <br />
             <b-button
               size="sm"
@@ -107,6 +117,7 @@ export default {
   data() {
     return {
       products: null,
+      unidscons: null,
       cons: '',
       isAdmin: '',
       isUser: '',
@@ -136,6 +147,10 @@ export default {
       const url5 = 'http://localhost:4500/venta/all' //listado ventas
       const res5 = await fetch(url5)
       const data5 = await res5.json()
+      
+      const url6 = 'http://localhost:4500/consumo/all' //listado ventas
+      const res6 = await fetch(url6)
+      const data6 = await res6.json()
 
       return {
         data,
@@ -143,10 +158,12 @@ export default {
         data2,
         data4,
         data5,
+        data6,
         events: data2.events,
         products: data3.products,
         users: data4.users,
         ventas: data5.ventas,
+        consumos: data6.consumos,
         userId: data.carrito.usuario._id,
         carritoId: ctx.params.id,
       }
@@ -165,6 +182,10 @@ export default {
     volver() {
       this.$router.back()
     },
+    consumo() {
+      console.log('consumo')
+      },
+
     venta(carritoId) {
       console.log('venta')
       this.$router.push(`/venta/${carritoId}`)
@@ -194,6 +215,37 @@ export default {
         alert('Hubo un problema al actualizar el usuario')
       }
     },
+async NewCons() {
+      console.log('Crear consumo')
+      
+      try {
+       const carritoId = this.$route.params.id
+       const url = 'http://localhost:4500/consumo/create'
+        const body = JSON.stringify({
+          carritoId,
+         productoId: this.productos,
+          unidades: this.unidscons,
+        })
+        const res = await fetch(url, {
+          method: 'post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body,
+        })
+        const data = await res.json()
+          console.log({ body })
+        if (data.error) {
+          alert(data.error)
+        } else {
+          console.log({ data }) // data
+          this.$router.back()
+        }
+      } catch (err) {
+        alert('Hubo un error al asignar el producto')
+      }
+    },
+
     async updateData() {
       const actualize = `http://localhost:4500/carrito/${id}`
       const res = await fetch(actualize)

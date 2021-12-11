@@ -19,14 +19,31 @@
                   type="text"
                 ></b-form-input>
 
-                <b-form-input
+                    <b-form-select
+                      v-model="category"
+                      size="sm"
+                      placeholder="seleccione usuario"
+                    >
+                      <template #first>
+                        <b-form-select-option
+                          v-for="category in categorys"
+                          :key="category._id"
+                          v-bind:value="category.categoryname"
+                          >{{ category.categoryname }}</b-form-select-option
+                        >
+                      </template>
+                    </b-form-select>
+               <br /><br />
+
+
+                <!-- <b-form-input
                   v-model="category"
                   id="inline-form-input-name"
                   class="mb-2 mr-sm-2 mb-sm-3"
                   placeholder="Categoría"
                   type="text"
                   required
-                ></b-form-input>
+                ></b-form-input> -->
 
                 <b-form-input
                   required
@@ -49,7 +66,15 @@
                 <b-button block variant="primary" @click="onSave"
                   >Guardar</b-button
                 > </b-form>
-                <p><nuxt-link to="./almacen">Volver</nuxt-link></p>
+                      <br />
+              <b-button
+                size="sm"
+                variant="outline-primary"
+                class="mb-2 mr-sm-2 mb-sm-3"
+                @click="volver"
+              >
+                Volver</b-button
+              ><br />
              
             </div>
           </b-card>
@@ -64,13 +89,13 @@ export default {
   data() {
     return {
       product: '',
-      category: '',
+      category: null,
       unids: '',
       active: '',
     }
   },
 
-  // si no tiene token le echamos a login
+   // si no tiene token le echamos a login
   beforeMount() {
     const token = window.localStorage.getItem('token')
 
@@ -83,6 +108,19 @@ export default {
     }
         
   },
+
+   async asyncData() {
+   
+      const url = 'http://localhost:4500/category/all' //listado categorías
+      const res = await fetch(url)
+      const data = await res.json()
+
+      return {
+        categoryId: data.categoryname,
+          categorys: data.categorys,
+              }
+    },
+
   methods: {
     async onSave() {
       console.log('Crear producto')
@@ -116,6 +154,9 @@ export default {
       } catch (err) {
         alert('Hubo un error al crear el evento')
       }
+    },
+      volver() {
+      this.$router.back()
     },
   },
 }
