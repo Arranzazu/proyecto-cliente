@@ -50,10 +50,11 @@
                   <th>Devolución</th>
                 </tr>
                 <tr
-                  v-for="venta in ventas"
+                  v-for="venta, index in ventas"
                   v-bind:key="venta._id"
                   
                 >
+                <!-- <td>{{ unidscons[index] }}</td> -->
                   <td
                     v-text="venta.producto.product"
                     v-if="venta.carrito === carritoId"
@@ -67,20 +68,20 @@
                   <td   v-if="venta.carrito === carritoId">
                    
                     <b-form-input
-                    v-model="unidscons"
+                    v-model="unidscons[index]"
                      id="unidscons"
                        placeholder="Unids."
                     ></b-form-input>
                   </td>
                   <td
-                    v-text="venta.unidades - unidscons"
+                    v-text="venta.unidades - (unidscons[index] ? unidscons[index] : 0)"
                     v-if="venta.carrito === carritoId"
                   ></td>
                 </tr>
               </table>
             </div>
  <b-button
-                @click="NewCons()"
+                @click="enviarprod()"
                 size="lg"
                 variant="warning"
                 class="mb-2 mr-sm-2 mb-sm-3"
@@ -117,7 +118,7 @@ export default {
   data() {
     return {
       products: null,
-      unidscons: null,
+      unidscons: {},
       cons: '',
       isAdmin: '',
       isUser: '',
@@ -215,16 +216,31 @@ export default {
         alert('Hubo un problema al actualizar el usuario')
       }
     },
-async NewCons() {
-      console.log('Crear consumo')
+
+    async enviarprod(){
+      let index = 0;
+        for (const venta of this.ventas) 
+        { 
+          if (venta.carrito === this.carritoId) {
+                 await this.NewCons(venta.producto._id, index)
+                
+                 console.log(venta)
+          }
+      index++
+          }
+
+    },
+
+async NewCons(_id, index) {
+      console.log('Crear consumo ', this.unidscons[index], index )
       
       try {
        const carritoId = this.$route.params.id
        const url = 'http://localhost:4500/consumo/create'
         const body = JSON.stringify({
           carritoId,
-         productoId: this.productos,
-          unidades: this.unidscons,
+         productoId: _id,
+          unidades: this.unidscons[index],
         })
         const res = await fetch(url, {
           method: 'post',

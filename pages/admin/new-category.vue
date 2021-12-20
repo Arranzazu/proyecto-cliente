@@ -78,7 +78,7 @@ export default {
     const data = await res.json()
 
     return {
-      categoryId: data.categoryname,
+      categoryname: data.categoryname,
       categorys: data.categorys,
     }
   },
