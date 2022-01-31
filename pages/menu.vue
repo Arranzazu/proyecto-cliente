@@ -33,16 +33,18 @@
           ><br />
 
           <p v-if="isUser" align="left"><u>Mis eventos:</u></p>
-           <p v-if="isAdmin" align="left"><u>Eventos Pendientes de Asignar:</u></p>
+           <p v-if="isAdmin" align="left"><u>Carritos con asignación pendiente:</u></p>
 
-          <div class="carritos" v-for="carrito in carritos" :key="carrito._id">
+          <div class="carritos" v-for="carrito in carritos" :key="carrito._id"> 
+            <!-- {{carrito.evento ? carrito.evento.name : carrito}} -->
             <b-button
               v-if="carrito.usuario === userId"
               @click="alcarrito(carrito._id)"
               size="lg"
               variant="outline-primary"
               class="mb-2 mr-sm-2"
-              >Evento {{ carrito.evento.name }}, carrito número
+              >
+              Evento {{ carrito.evento.name }}, carrito número
               {{ carrito.numero }}</b-button
             >
           </div>

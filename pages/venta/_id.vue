@@ -29,7 +29,7 @@
                 v-model="unidades"
                 required
               ></b-form-input>
-              <b-button @click="NewVenta" size="lg" class="mb-2 mr-sm-2 mb-sm-3"
+              <b-button @click="NewAsignado" size="lg" class="mb-2 mr-sm-2 mb-sm-3"
                 >Asignar</b-button
               >
 
@@ -98,22 +98,25 @@ export default {
       this.$router.back()
     },
 
-    async NewVenta() {
-      console.log('Crear venta')
+    async NewAsignado() {
+      console.log('Crear Asignado')
       if (!this.productos || !this.unidades) {
         alert('Todos los campos son necesarios')
         return
       }
       try {
        const carritoId = this.$route.params.id
-       const url = 'http://localhost:4500/venta/create'
+      //  const evento = data.carrito.evento.id
+  
+       const url = 'http://localhost:4500/asignado/create'
         const body = JSON.stringify({
           carritoId,
+          // evento,
           productoId: this.productos,
           unidades: this.unidades,
         })
         const res = await fetch(url, {
-          method: 'post',
+          method: 'post', 
           headers: {
             'Content-Type': 'application/json',
           },

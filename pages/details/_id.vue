@@ -85,18 +85,18 @@ export default {
       const res2 = await fetch(url2)
       const data2 = await res2.json()
 
-      const url3 = 'http://localhost:4500/almacen/all' //listadoproductos
-      const res3 = await fetch(url3)
-      const data3 = await res3.json()
+      // const url3 = 'http://localhost:4500/almacen/all' //listadoproductos
+      // const res3 = await fetch(url3)
+      // const data3 = await res3.json()
 
       // console.log({ data })
 
       return {
         data,
-        data3,
+        // data3,
         data2,
         carritos: data2.carritos,
-        products: data3.products,
+        // products: data3.products,
         eventId: ctx.params.id,
       }
     } catch (_) {

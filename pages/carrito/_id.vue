@@ -9,9 +9,9 @@
                 {{ data.carrito.numero }}</b
               >
               <br />
-              Fecha:<b> {{ data.carrito.evento.date }}</b
+              Fecha:<b> {{ data.carrito.evento.date}} </b
               ><br />
-              Evento activo:<b> {{ data.carrito.evento.activo }}</b
+              Evento activo:<b> {{ data.carrito.evento.activo}} </b
               ><br />
               <div v-if="isUser">
                 Asignado a: <b>{{ myemail }}</b>
@@ -49,54 +49,76 @@
                   <th>Consumos</th>
                   <th>Devolución</th>
                 </tr>
-                <tr
-                  v-for="venta, index in ventas"
-                  v-bind:key="venta._id"
-                  
-                >
-                <!-- <td>{{ unidscons[index] }}</td> -->
+                <tr v-for="asignado in asignados" v-bind:key="asignado._id">
+                  <!-- <tr
+                  v-for="asignado, index in asignados"
+                  v-bind:key="asignado._id"
+            
+                > -->
+                  <!-- <td>{{ unidscons[index] }}</td> -->
                   <td
-                    v-text="venta.producto.product"
-                    v-if="venta.carrito === carritoId"
+                    v-text="asignado.producto.product"
+                    v-if="asignado.carrito === carritoId"
                   ></td>
 
                   <td
-                    v-text="venta.unidades"
-                     id="unidades1"
-                    v-if="venta.carrito === carritoId"
+                    v-text="asignado.unidades"
+                    id="unidades1"
+                    v-if="asignado.carrito === carritoId"
                   ></td>
-                  <td   v-if="venta.carrito === carritoId">
-                   
-                    <b-form-input
+
+                  <td v-if="asignado.carrito === carritoId">
+                    <b-form-input         
+                      id="unidscons"
+                      :key="asignado._id"
+                      v-model="asignado.venta"
+                      >{{ asignado.venta }}</b-form-input
+                    >
+                  </td>
+
+                  <!-- <b-form-input
                     v-model="unidscons[index]"
                      id="unidscons"
                        placeholder="Unids."
                     ></b-form-input>
-                  </td>
+                    
+                  </td> -->
+                  <!-- <td
+                    v-text="asignado.unidades - (unidscons[index] ? unidscons[index] : 0)"
+                    v-if="asignado.carrito === carritoId"
+                  ></td>  -->
                   <td
-                    v-text="venta.unidades - (unidscons[index] ? unidscons[index] : 0)"
-                    v-if="venta.carrito === carritoId"
+                    v-text="asignado.unidades - asignado.venta"
+                    v-if="asignado.carrito === carritoId"
                   ></td>
                 </tr>
               </table>
             </div>
- <b-button
-                @click="enviarprod()"
-                size="lg"
-                variant="warning"
-                class="mb-2 mr-sm-2 mb-sm-3"
-                >Validar consumos</b-button
-              >
+
             <div v-if="isAdmin">
               <b-button
-                @click="venta(carritoId)"
+                @click="asignado(carritoId)"
                 size="lg"
                 variant="success"
                 class="mb-2 mr-sm-2 mb-sm-3"
                 >Asignar Producto</b-button
               >
             </div>
-             
+            <b-button
+              @click="enviarprod()"
+              size="lg"
+              variant="warning"
+              class="mb-2 mr-sm-2 mb-sm-3"
+              >Validar consumos</b-button
+            >
+            <!-- <b-button
+                @click="editarconsumo()"
+                size="lg"
+                variant="warning"
+                class="mb-2 mr-sm-2 mb-sm-3"
+                >Validar consumos</b-button
+              > -->
+
             <br />
             <b-button
               size="sm"
@@ -145,13 +167,14 @@ export default {
       const res4 = await fetch(url4)
       const data4 = await res4.json()
 
-      const url5 = 'http://localhost:4500/venta/all' //listado ventas
+      const url5 = 'http://localhost:4500/asignado/all' //listado asignados
       const res5 = await fetch(url5)
       const data5 = await res5.json()
-      
-      const url6 = 'http://localhost:4500/consumo/all' //listado ventas
+
+      const url6 = 'http://localhost:4500/consumo/all' //listado consumoss
       const res6 = await fetch(url6)
       const data6 = await res6.json()
+
 
       return {
         data,
@@ -163,7 +186,7 @@ export default {
         events: data2.events,
         products: data3.products,
         users: data4.users,
-        ventas: data5.ventas,
+        asignados: data5.asignados,
         consumos: data6.consumos,
         userId: data.carrito.usuario._id,
         carritoId: ctx.params.id,
@@ -185,10 +208,10 @@ export default {
     },
     consumo() {
       console.log('consumo')
-      },
+    },
 
-    venta(carritoId) {
-      console.log('venta')
+    asignado(carritoId) {
+      console.log('asignado')
       this.$router.push(`/venta/${carritoId}`)
     },
     async Reasignar() {
@@ -217,50 +240,128 @@ export default {
       }
     },
 
-    async enviarprod(){
-      let index = 0;
-        for (const venta of this.ventas) 
-        { 
-          if (venta.carrito === this.carritoId) {
-                 await this.NewCons(venta.producto._id, index)
-                
-                 console.log(venta)
-          }
-      index++
-          }
+    //     async editarconsumo() {
+    //   const url = `http://localhost:4500/consumo/${this.asignado._id}`
+    //   const body = JSON.stringify({
+    //     venta: this.venta,
+    //   })
+    //   try {
+    //     const res = await fetch(url, {
+    //       method: 'put',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body,
+    //     })
+    //     const data = await res.json()
+    //     if (data.error) {
+    //       alert(data.error)
+    //       return
+    //     }
+    //     alert('consumos Modificado')
+    //     this.$router.back()
+    //     // await this.updateData()
+    //   } catch (err) {
+    //     alert('Hubo un problema al actualizar los consumos')
+    //   }
+    // },
 
+    async enviarprod() {
+      console.log('asignando enviarprod')
+      let index = 0
+      for (const asignado of this.asignados) {
+        if (asignado.carrito === this.carritoId) {
+          await this.NewCons(asignado.producto._id, index)
+
+          console.log('asignando', asignado)
+        }
+        index++
+      }
     },
 
-async NewCons(_id, index) {
-      console.log('Crear consumo ', this.unidscons[index], index )
-      
+    async NewCons(_id, index) {
+      console.log(
+        'Editar consumo ',
+        this.asignados[index].venta,
+        index,
+        this.carritoId
+      )
+
       try {
-       const carritoId = this.$route.params.id
-       const url = 'http://localhost:4500/consumo/create'
+        const carritoId = this.$route.params.id
+        const url = 'http://localhost:4500/consumo/'+this.asignados[index]._id
         const body = JSON.stringify({
-          carritoId,
-         productoId: _id,
-          unidades: this.unidscons[index],
+          //   carritoId,
+          //  productoId:_id,
+          // unidades: this.unidscons[index],
+          venta: this.asignados[index].venta,
+        
         })
         const res = await fetch(url, {
-          method: 'post',
+          method: 'put',
           headers: {
             'Content-Type': 'application/json',
           },
           body,
         })
         const data = await res.json()
-          console.log({ body })
+        console.log({ body })
         if (data.error) {
           alert(data.error)
         } else {
           console.log({ data }) // data
-          this.$router.back()
+        
         }
       } catch (err) {
         alert('Hubo un error al asignar el producto')
       }
     },
+
+    //     async enviarprod(){
+    //       console.log("asignando")
+    //       let index = 0;
+    //         for (const asignado of this.asignados)
+    //         {
+    //           if (asignado.carrito === this.carritoId) {
+    //                  await this.NewCons(asignado.producto._id, index)
+
+    //                  console.log('asignando', asignado)
+    //           }
+    //       index++
+    //           }
+
+    //     },
+
+    // async NewCons(_id, index) {
+    //       console.log('Crear consumo ', this.unidscons[index], index, this.carritoId )
+
+    //       try {
+    //        const carritoId = this.$route.params.id
+    //        const url = 'http://localhost:4500/consumo/create'
+    //         const body = JSON.stringify({
+    //           carritoId,
+    //          productoId:_id,
+    //           unidades: this.unidscons[index],
+    //         })
+    //         const res = await fetch(url, {
+    //           method: 'post',
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //           },
+    //           body,
+    //         })
+    //         const data = await res.json()
+    //           console.log({ body })
+    //         if (data.error) {
+    //           alert(data.error)
+    //         } else {
+    //           console.log({ data }) // data
+    //           this.$router.back()
+    //         }
+    //       } catch (err) {
+    //         alert('Hubo un error al asignar el producto')
+    //       }
+    //     },
 
     async updateData() {
       const actualize = `http://localhost:4500/carrito/${id}`
