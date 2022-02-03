@@ -6,11 +6,13 @@
           <b-card title="Crear una categoría" class="mb-2">
                 <b-card-text class="text-center">
                     <b>Categorías actuales:</b>
-                    <tr  v-for="category in categorys"
-                     :key="category.categoryname"
-                     >
-                    <td   v-text="category.categoryname"></td>
-                    </tr>
+                  
+                     <b-list-group><b-list-group-item v-for="category in categorys" :key="category.categoryname">
+                     {{category.categoryname}}</b-list-group-item
+                    ></b-list-group
+                  >
+                  <br>
+                  
                 </b-card-text>
             <b-card-text>
                <b> Nueva Categoría:</b><br>
@@ -31,17 +33,17 @@
                   >Crear Categoría</b-button
                 >
               </b-form>
-              <br />
-              <b-button
+             
+            
+            </div>
+          </b-card> <br /> <b-button
                 size="sm"
                 variant="outline-primary"
                 class="mb-2 mr-sm-2 mb-sm-3"
                 @click="volver"
               >
                 Volver</b-button
-              ><br />
-            </div>
-          </b-card>
+              >
         </div>
       </b-row>
     </b-container>
@@ -108,7 +110,7 @@ export default {
         } else {
           console.log({ data }) // data
           alert('Categoría creada')
-          this.$router.push('./almacen')
+          this.$router.push('./productos')
         }
       } catch (err) {
         alert('Hubo un error al crear el evento')

@@ -4,7 +4,8 @@
              <b-row class="text-center"  >
    
           <div class="saludo">
-              <b-card title="Bienvenido a helados Malvarrosa" sub-title="Por favor, seleccione una opción">
+         <b-img src="../static/Helados-malvarrosa-horiz.png"></b-img><br><br>
+              <b-card               title="Bienvenido a helados Malvarrosa" sub-title="Por favor, seleccione una opción">
     <b-card-text>
       
     </b-card-text>

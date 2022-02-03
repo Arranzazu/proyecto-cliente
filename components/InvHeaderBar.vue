@@ -1,13 +1,13 @@
 <template>
   <div>
-    <b-navbar class="navbar" toggleable="lg" type="dark" variant="info">
-      <b-navbar-brand href="http://localhost:3000/menu">HELADOS MALVARROSA</b-navbar-brand>
+    <b-navbar class="navbar" toggleable="lg" type="dark" variant="dark">
+      <b-navbar-brand href="http://localhost:3000/menu"> <b-img src="../static/Helados-malvarrosa-horiz2.png"></b-img></b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav v-if="email">
-          <b-nav-item> Usuario: {{ email }}.</b-nav-item>
+          <b-nav-item > Usuario conectado: {{ email }}</b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->

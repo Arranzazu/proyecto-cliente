@@ -16,8 +16,8 @@
             </b-col >
           </b-row> 
         </b-container>
- <!-- <InvFooterBar /> -->
 
+<InvFooterBar />
 
   </div>      
 </template>
@@ -30,7 +30,8 @@ export default {
 
 <style>
 .inv-layout-main {
- height: 89vh;
+  min-height: 86.8vh;
+ height: 100%;
 }
 </style>
 

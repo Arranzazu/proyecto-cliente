@@ -21,7 +21,7 @@
                       :key="event._id"
                       :value=(event._id)
                       v-bind:style="event.activo === false ? 'color:red' : ''"
-                      >{{ event.name }}, {{ event.date }}
+                      ><b>{{ event.name }}</b>, fecha <b>{{ event.date.substring(0,10) }}</b>
                     </b-form-select-option>
                   </template>
                 </b-form-select>

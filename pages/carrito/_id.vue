@@ -9,10 +9,11 @@
                 {{ data.carrito.numero }}</b
               >
               <br />
-              Fecha:<b> {{ data.carrito.evento.date}} </b
+              Fecha:<b> {{ data.carrito.evento.date.substring(0,10)}} </b
               ><br />
-              Evento activo:<b> {{ data.carrito.evento.activo}} </b
-              ><br />
+              Evento activo:<b v-if="data.carrito.evento.activo === false"> No </b>
+              <b v-if="data.carrito.evento.activo === true"> Si </b>
+              <br /> 
               <div v-if="isUser">
                 Asignado a: <b>{{ myemail }}</b>
               </div>

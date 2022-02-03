@@ -4,39 +4,35 @@
       <b-row class="text-center">
         <div class="saludo">
           <b-card title="Almacén" class="mb-2"></b-card>
-            <b-card-text> </b-card-text>
+          <b-card-text> <b-img align="left" src="./../../static/Helados-malvarrosa-horiz2.png"></b-img><br></b-card-text>
 
-            
-              <!-- Tabla hoy -->
-              <b-table
-                striped
-                hover
-                :items="items3"
-                
-              ></b-table>
+          <!-- Tabla -->
+          <b-table striped hover :items="items3"></b-table>
+          <!-- Fin tabla -->
 
-              <!-- tabla abajo -->
-              <b-table
-                striped
-                hover
-                :items="items2"
-                :fields="fields2"
-              ></b-table>
-          
-
-            <b-button
-              size="sm"
-              variant="outline-primary"
+           <b-button
+              size="lg"
+              variant="warning"
               class="mb-2 mr-sm-2 mb-sm-3"
-              @click="volver"
+              @click="newproduct"
+              >Gestionar Productos y Categorías</b-button
             >
-              Volver</b-button
-            ><br />
-          
+           
+<br>
+          <b-button
+            size="sm"
+            variant="outline-primary"
+            class="mb-2 mr-sm-2 mb-sm-3"
+            @click="volver"
+          >
+            Volver</b-button
+          ><br />
         </div>
       </b-row>
     </b-container>
-  </div>
+  
+  </div>  
+  
 </template>
 
 <script>
@@ -48,8 +44,6 @@ export default {
 
       items3: [],
       fields3: [],
-
-      
     }
   },
 
@@ -79,7 +73,7 @@ export default {
 
   methods: {
     newproduct() {
-      this.$router.push('/admin/new-product')
+      this.$router.push('/admin/productos')
     },
     newcategory() {
       this.$router.push('/admin/new-category')
@@ -91,20 +85,22 @@ export default {
       for (const product of this.products) {
         const obj = {}
         obj.Producto = product.product
-        for (const venta of this.ventas) {
-          obj[venta.nombre] = this.obtenerventa(product._id, venta) 
+            for (const venta of this.ventas) {
+          obj[venta.nombre] = this.obtenerventa(product._id, venta)
+       
         }
-        obj.total= this.obttotal(obj)
+        
+        obj.total = this.obttotal(obj)
         this.items3.push(obj)
       }
     },
-    obtenerventa(productid, venta){
+    obtenerventa(productid, venta) {
       let total = 0
-      for ( const producto of venta.productos) {
+      for (const producto of venta.productos) {
         console.log(productid, producto.id)
-          if (productid.toString() === producto.id.toString()) {
-            total += producto.venta
-          }
+        if (productid.toString() === producto.id.toString()) {
+          total += producto.venta
+        }
       }
       return total
     },
@@ -114,23 +110,21 @@ export default {
     //    }
     //    return 0
     //  }
-    obttotal(obj){
+    obttotal(obj) {
       let total = 0
       const lista = Object.values(obj)
-      for ( const value of lista.slice(1,lista.length)){
+      for (const value of lista.slice(1, lista.length)) {
         total += value
       }
       return total
-    }
+    },
   },
- 
-
 }
 </script>
 
 <style>
 .saludo {
-  margin-top: 40px !important;
-  padding: 40px;
+  margin-top: 0px !important;
+  padding: 0px;
 }
 </style>

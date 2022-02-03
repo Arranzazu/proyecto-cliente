@@ -6,9 +6,10 @@
           <b-card title="Detalles del Evento" class="mb-2">
             <b-card-text>
               Detalles del evento<b> {{ data.event.name }} </b><br />
-              Activo:<b> {{ data.event.activo }}</b
-              ><br />
-              Fecha:<b> {{ data.event.date }}</b
+              Activo:<b v-if="data.event.activo === false"> No </b>
+              <b v-if="data.event.activo === true"> Si </b>
+              <br />
+              Fecha:<b> {{ data.event.date.substring(0, 10) }}</b
               ><br />
             </b-card-text>
             <p>Carritos:</p>
