@@ -34,6 +34,7 @@
                  <b-button
                   size="lg"
                   class="mb-2 mr-sm-2 mb-sm-3"
+                  variant="info"
                   @click="detail(event._id)"
                   >Detalles</b-button
                 ></td>
@@ -41,8 +42,8 @@
                 <td>
                   <b-button
                     v-if="event.activo === false"
-                    variant="info"
-                    size="sg"
+                    variant="success"
+                    size="lg"
                     class="mb-2 mr-sm-2 mb-sm-1"
                     @click="ActiveYes(event._id)"
                     >Activar</b-button
@@ -51,7 +52,7 @@
                   <b-button
                     v-if="event.activo === true"
                     variant="warning"
-                    size="sg"
+                    size="lg"
                     class="mb-2 mr-sm-2 mb-sm-1"
                     @click="ActiveNo(event._id)"
                     >Desactivar</b-button

@@ -40,6 +40,8 @@
                   >
                 </b-row>
               </div>
+             <br>
+              A continuación escriba los consumos en cada producto <b>siempre con número positivo</b> (sin el -)
             </b-card-text>
 
             <div class="table details">
@@ -271,8 +273,8 @@ export default {
           body,
         })
         const data = await res.json()
-         alert('Consumos reasignados. Puede volver a modificarlos en caso de que sea necesario hasta que se desactive el evento')
-        this.$router.back()
+        //  alert('Consumos reasignados. Puede volver a modificarlos en caso de que sea necesario hasta que se desactive el evento')
+         await this.$router.home
          console.log({ body })
         if (data.error) {
           alert(data.error)
