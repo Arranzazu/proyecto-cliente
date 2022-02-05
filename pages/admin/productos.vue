@@ -32,13 +32,13 @@
                 <th  sortable: true>Categoría</th>
                 <th>Activo</th>
                 <th>Cambiar Estado</th>
-                <th>Eliminar</th>
+                <!-- <th>Eliminar</th> -->
               </tr>
               <tr v-for="product in products" v-bind:key="product._id">
-                <td v-text="product.product"></td>
+                <td v-text="product.product" v-bind:style="product.active === false ? 'color:red' : ''"></td>
 
-                <td v-text="product.category"></td>
-                <td v-if="product.active === false"> No </td>
+                <td v-text="product.category" v-bind:style="product.active === false ? 'color:red' : ''"></td>
+                <td v-if="product.active === false" v-bind:style="product.active === false ? 'color:red' : ''"> No </td>
               <td v-if="product.active === true"> Si </td>
                
                 <td>
@@ -60,7 +60,7 @@
                     >Desactivar</b-button
                   >
                 </td>
-                <td>
+                <!-- <td>
                   <b-button
                     variant="danger"
                     size="sg"
@@ -68,7 +68,7 @@
                     @click="removeProduct(product._id)"
                     >Eliminar</b-button
                   >
-                </td>
+                </td> -->
               </tr>
             </table>
           </div>

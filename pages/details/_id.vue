@@ -33,21 +33,39 @@
             <b-button
               @click="newCar(eventId)"
               size="lg"
-              variant="outline-success"
+              variant="success"
               class="mb-2 mr-sm-2"
               >Añadir Carrito</b-button
             >
 
+             <b-button
+                    v-if="data.event.activo === false"
+                    variant="info"
+                    size="lg"
+                    class="mb-2 mr-sm-2 mb-sm-1"
+                    @click="ActiveYes(eventId)"
+                    >Activar Evento</b-button
+                  >
+
+                  <b-button
+                    v-if="data.event.activo === true"
+                    variant="warning"
+                    size="lg"
+                    class="mb-2 mr-sm-2 mb-sm-1"
+                    @click="ActiveNo(eventId)"
+                    >Desactivar Evento</b-button
+                  >
+
             <br />
-            <b-button
+           
+          </b-card> <br /><b-button
               size="sm"
               variant="outline-primary"
               class="mb-2 mr-sm-2 mb-sm-3"
               @click="volver"
             >
               Volver</b-button
-            ><br />
-          </b-card>
+            >
         </div>
       </b-row>
     </b-container>
@@ -86,18 +104,11 @@ export default {
       const res2 = await fetch(url2)
       const data2 = await res2.json()
 
-      // const url3 = 'http://localhost:4500/almacen/all' //listadoproductos
-      // const res3 = await fetch(url3)
-      // const data3 = await res3.json()
-
-      // console.log({ data })
-
+    
       return {
         data,
-        // data3,
         data2,
         carritos: data2.carritos,
-        // products: data3.products,
         eventId: ctx.params.id,
       }
     } catch (_) {
@@ -118,6 +129,37 @@ export default {
     },
     sortCarritos(carritos) {
       return carritos, 'numero'
+    },
+
+    async ActiveYes(eventId) {
+      const url = `http://localhost:4500/event/ActiveYes/${eventId}`
+      var answer = confirm('Vas a actiar el evento')
+      if (answer) {
+        await fetch(url, { method: 'post' })
+        alert('Evento Activo')
+        await   this.$router.back()
+      } else {
+        this.$router.push('/admin/eventos')
+      }
+    },
+
+    async ActiveNo(eventId) {
+      const url = `http://localhost:4500/event/ActiveNo/${eventId}`
+      var answer = confirm('El evento dejará de estar activo')
+      if (answer) {
+        await fetch(url, { method: 'post' })
+        alert('Evento Desactivado')
+        await   this.$router.back()
+      } else {
+        this.$router.push('/admin/eventos')
+      }
+    },
+     async updateData() {
+    
+      const actualize = `http://localhost:4500/event/get/${id}`
+      const res = await fetch(actualize)
+      const data = await res.json()
+      this.event = data.event
     },
   },
 }

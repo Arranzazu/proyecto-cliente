@@ -7,7 +7,7 @@
           <b-card-text> <b-img align="left" src="./../../static/Helados-malvarrosa-horiz2.png"></b-img><br></b-card-text>
 
           <!-- Tabla -->
-          <b-table striped hover :items="items3"></b-table>
+          <b-table striped hover :items="items3" ></b-table>
           <!-- Fin tabla -->
 
            <b-button

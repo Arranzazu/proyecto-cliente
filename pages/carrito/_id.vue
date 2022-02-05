@@ -77,19 +77,9 @@
                     >
                   </td>
 
-                  <!-- <b-form-input
-                    v-model="unidscons[index]"
-                     id="unidscons"
-                       placeholder="Unids."
-                    ></b-form-input>
-                    
-                  </td> -->
-                  <!-- <td
-                    v-text="asignado.unidades - (unidscons[index] ? unidscons[index] : 0)"
-                    v-if="asignado.carrito === carritoId"
-                  ></td>  -->
+                
                   <td
-                    v-text="asignado.unidades - asignado.venta"
+                    v-text="asignado.unidades + asignado.venta"
                     v-if="asignado.carrito === carritoId"
                   ></td>
                 </tr>
@@ -241,31 +231,6 @@ export default {
       }
     },
 
-    //     async editarconsumo() {
-    //   const url = `http://localhost:4500/consumo/${this.asignado._id}`
-    //   const body = JSON.stringify({
-    //     venta: this.venta,
-    //   })
-    //   try {
-    //     const res = await fetch(url, {
-    //       method: 'put',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body,
-    //     })
-    //     const data = await res.json()
-    //     if (data.error) {
-    //       alert(data.error)
-    //       return
-    //     }
-    //     alert('consumos Modificado')
-    //     this.$router.back()
-    //     // await this.updateData()
-    //   } catch (err) {
-    //     alert('Hubo un problema al actualizar los consumos')
-    //   }
-    // },
 
     async enviarprod() {
       console.log('asignando enviarprod')
@@ -276,7 +241,7 @@ export default {
 
           console.log('asignando', asignado)
         }
-        index++
+        index++ 
       }
     },
 
@@ -295,7 +260,7 @@ export default {
           //   carritoId,
           //  productoId:_id,
           // unidades: this.unidscons[index],
-          venta: this.asignados[index].venta,
+          venta: (this.asignados[index].venta)*-1,
         
         })
         const res = await fetch(url, {
@@ -306,12 +271,14 @@ export default {
           body,
         })
         const data = await res.json()
-        console.log({ body })
+         alert('Consumos reasignados. Puede volver a modificarlos en caso de que sea necesario hasta que se desactive el evento')
+        this.$router.back()
+         console.log({ body })
         if (data.error) {
           alert(data.error)
         } else {
           console.log({ data }) // data
-        
+         
         }
       } catch (err) {
         alert('Hubo un error al asignar el producto')
@@ -364,11 +331,11 @@ export default {
     //       }
     //     },
 
-    async updateData() {
+    async updateData(id) {
       const actualize = `http://localhost:4500/carrito/${id}`
       const res = await fetch(actualize)
       const data = await res.json()
-      this.carritos = data.carritos
+      this.carritoId = data.carritoId
     },
   },
 }

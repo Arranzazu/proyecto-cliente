@@ -32,19 +32,31 @@
             ><b-icon icon="people"> </b-icon> Usuarios</b-button
           ><br />
 <br>
-          <p v-if="isUser" align="left"><u>Mis eventos:</u></p>
+          <p v-if="isUser" align="center"><b>Bienvenid@ usuario de Helados Malvarrosa. </b><br> A continuación se le mostrarán (si los tuviera) los eventos que le han sido asignados</p>
           <h3> <p v-if="isAdmin" align="center"><u>Carritos con asignación pendiente:</u></p></h3>
 
           <div class="carritos" v-for="carrito in carritos" :key="carrito._id"> 
             <!-- {{carrito.evento ? carrito.evento.name : carrito}} -->
             <b-button
-              v-if="carrito.usuario === userId"
+              v-if="carrito.usuario === userId && carrito.evento.activo=== false "
               @click="alcarrito(carrito._id)"
               size="lg"
-              variant="outline-primary"
+              variant="outline-danger"
               class="mb-2 mr-sm-2"
+              disabled
+                            >
+              <b>NO ACTIVO</b> {{ carrito.evento.name }}, carrito número
+              {{ carrito.numero }}</b-button
+            >
+             <b-button
+              v-if="carrito.usuario === userId && carrito.evento.activo=== true "
+              @click="alcarrito(carrito._id)"
+              size="lg"
+              variant="outline-success"
+              class="mb-2 mr-sm-2"
+              v-bind:style="carrito.evento.activo === false ? '' : ''"
               >
-              Evento {{ carrito.evento.name }}, carrito número
+              <b>ACTIVO</b> {{ carrito.evento.name }}, carrito número
               {{ carrito.numero }}</b-button
             >
           </div>
